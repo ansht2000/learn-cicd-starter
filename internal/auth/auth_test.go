@@ -30,7 +30,7 @@ func TestAuth(t *testing.T) {
 		{
 			header: incorrectHeaderNoAuth,
 			expectedAPIKey: "",
-			expectedError: nil,
+			expectedError: ErrNoAuthHeaderIncluded,
 		},
 	}
 

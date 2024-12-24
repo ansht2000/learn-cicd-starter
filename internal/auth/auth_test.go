@@ -12,32 +12,32 @@ func TestAuth(t *testing.T) {
 	correctHeader.Add("Authorization", "ApiKey secretstuff")
 	incorrectHeaderMalformed.Add("Authorization", "secretstuff")
 
-	cases := []struct{
-		header http.Header
+	cases := []struct {
+		header         http.Header
 		expectedAPIKey string
-		expectedError error
+		expectedError  error
 	}{
 		{
-			header: correctHeader,
+			header:         correctHeader,
 			expectedAPIKey: "secretstuff",
-			expectedError: nil,
+			expectedError:  nil,
 		},
 		{
-			header: incorrectHeaderMalformed,
+			header:         incorrectHeaderMalformed,
 			expectedAPIKey: "",
-			expectedError: ErrMalformedAuthHeader,
+			expectedError:  ErrMalformedAuthHeader,
 		},
 		{
-			header: incorrectHeaderNoAuth,
+			header:         incorrectHeaderNoAuth,
 			expectedAPIKey: "",
-			expectedError: ErrNoAuthHeaderIncluded,
+			expectedError:  ErrNoAuthHeaderIncluded,
 		},
 	}
 
 	for i, c := range cases {
 		apiKey, err := GetAPIKey(c.header)
 		if apiKey != c.expectedAPIKey || err != c.expectedError {
-			t.Errorf("test %d: Failed to parse API key %s from header %v, instead got key %s", i + 1, c.expectedAPIKey, c.header, apiKey)
+			t.Errorf("test %d: Failed to parse API key %s from header %v, instead got key %s", i+1, c.expectedAPIKey, c.header, apiKey)
 			t.Fail()
 		}
 	}
